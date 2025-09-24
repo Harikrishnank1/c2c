@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Dashboard (HTML + CSS)</title>
+    <style>
+        :root {
+            --left-w: 72px;
+            --main-w: 1100px;
+            --right-w: 320px;
+            --radius-lg: 18px;
+            --bg: #ffffff;
+            --card-bg: #F6F7FB;
+            --muted: #8b8f95;
+            --primary: #0f1724;
+            --neutral-bg: #F2F4F7;
+            --grey-border: #E6E9EE;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            background: var(--bg);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            color: var(--primary);
+            overflow-x: hidden;
+        }
+
+        img {
+            display: block;
+            max-width: 100%
+        }
+    
+        .left-sidebar {
+            position: fixed;
+            left: calc(-1 * var(--left-w));
+            top: 0;
+            bottom: 0;
+            width: var(--left-w);
+            background: var(--card-bg);
+            border-right: 1px solid var(--grey-border);
+            border-top-right-radius: 20px;
+            padding: 32px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+            transition: left 0.3s ease, background 0.3s ease;
+        }
+        .hover-trigger:hover + .left-sidebar,
+        .left-sidebar:hover {
+            left: 0;
+            background: #fff;
+        }
+        
+        .main-container {
+            display: flex;
+            min-height: 100vh;
+            margin-left: 0;
+        }
+
+        .main-content {
+            width: var(--main-w);
+            padding: 24px 28px;
+            box-sizing: border-box;
+        }
+
+        .right-sidebar {
+            position: sticky;
+            top: 0;
+            right: 0;
+            width: var(--right-w);
+            min-height: 100vh;
+            overflow-y: auto;
+            background: #fff;
+            border-left: 1px solid var(--grey-border);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            color: var(--primary)
+        }
+
+        h2 {
+            font-size: 18px;
+            margin: 0 0 12px 0;
+            color: var(--primary);
+        }
+        
+        h3 {
+            font-size: 16px;
+            margin: 0;
+        }
+        .card {
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-height: 84px;
+            justify-content: space-between;
+        }
+        
+        .card-large {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .icon-round {
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 6px 10px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #fff;
+            width: 70px;
+        }
+        .flex {
+            display: flex;
+        }
+        
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .gap-2 {
+            gap: 8px;
+        }
+
+        .mb-8 {
+            margin-bottom: 32px;
+        }
+        .hover-trigger {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 100vh;
+            z-index: 30;
+            cursor: pointer;
+            background: #e6e9ee; 
+            transition: opacity 0.3s ease;
+        }
+        
+        .hover-trigger:hover {
+            opacity: 0;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .divider {
+            width: 70px;
+            height: 1px;
+            background: rgba(0, 0, 0, .2);
+            margin-bottom: 24px
+        }
+        .left-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .left-nav div {
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, opacity 0.2s ease;
+            opacity: .2;
+        }
+
+       
+        .left-nav .active-nav-item {
+            background: var(--card-bg);
+            color: var(--primary);
+            opacity: 1;
+        }
+
+       
+        .left-nav div:hover {
+            background-color: var(--neutral-bg);
+        }
+
+        .left-bottom {
+            margin-top: auto;
+            margin-bottom: 32px;
+            opacity: .6
+        }
+        
+       
+        .sub {
+            color: #222;
+            opacity: .8;
+            margin-top: 4px
+        }
+
+       
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px
+        }
+
+       
+        .green {
+            background: #E9FBF1;
+            color: #2C7A4B;
+        }
+
+        .green .icon-round {
+            background: #DFF7E8;
+        }
+
+        .green .btn {
+            background: #2C7A4B;
+            color: #fff;
+        }
+
+        .blue {
+            background: #EEF6FF;
+            color: #2266FF;
+        }
+
+        .blue .icon-round {
+            background: #DCEEFF;
+        }
+
+        .blue .btn {
+            background: #2266FF;
+            color: #fff;
+        }
+
+        .purple {
+            background: #F6F3FF;
+            color: #7B3AEA;
+        }
+
+        .purple .icon-round {
+            background: #ECE6FF;
+        }
+
+        .purple .btn {
+            background: #7B3AEA;
+            color: #fff;
+        }
+
+        .orange {
+            background: #FFF6ED;
+            color: #FF7A1A;
+        }
+
+        .orange .icon-round {
+            background: #FFEDD6;
+        }
+
+        .orange .btn {
+            background: #FF7A1A;
+            color: #fff;
+        }
+
+        .pink {
+            background: #FFF0F7;
+            color: #FF4DA6;
+        }
+
+        .pink .icon-round {
+            background: #FFE0F0;
+        }
+
+        .pink .btn {
+            background: #FF4DA6;
+            color: #fff;
+        }
+
+        .red {
+            background: #FFF0F0;
+            color: #E63946;
+        }
+
+        .red .icon-round {
+            background: #FFD8D8;
+        }
+
+        .red .btn {
+            background: #E63946;
+            color: #fff;
+        }
+
+    
+        .controls {
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1px solid var(--grey-border);
+            padding: 10px 12px;
+            border-radius: 10px;
+            width: 220px;
+        }
+
+        .search input {
+            border: 0;
+            outline: none;
+            font-size: 14px
+        }
+
+        .todo-item {
+            background: var(--neutral-bg);
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .todo-left {
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .badge {
+            background: #FFEAF6;
+            color: #FF4DA6;
+            padding: 6px 8px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 12px
+        }
+        
+    
+        .cards-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 12px
+        }
+
+             .small-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 18px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, .06);
+            overflow: hidden
+        }
+
+        .progress-bar>i {
+            display: block;
+            height: 100%;
+            background: #2266FF;
+            width: 60%
+        }
+
+
+        
+        .bar-graph {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 100px;
+            gap: 8px;
+            margin-top: 50px;
+        }
+
+        .bar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 1;
+        }
+        
+        .bar-fill {
+            width: 100%;
+            background: var(--dashboard-blue-primary);
+            border-radius: 6px;
+        }
+
+        .bar-fill.purple {
+            background: var(--dashboard-purple-primary);
+        }
+
+        .bar {
+            width: 20%;
+            background: #EAF0FF;
+            border-radius: 6px;
+            height: 100px;
+            display: flex;
+            align-items: flex-end;
+        }
+        
+        .bar-score {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        
+        .bar-label {
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 8px;
+            color: var(--primary);
+        }
+
+       
+        .resource .searchbar {
+            position: relative;
+        }
+
+        .resource input {
+            width: 100%;
+            padding: 12px 80px 12px 44px;
+            border-radius: 12px;
+            border: 0;
+            font-size: 16px;
+        }
+
+        .resource .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: .9
+        }
+
+        .resource .right-actions {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        .resource-item {
+            background: rgba(0, 0, 0, .04);
+            padding: 10px;
+            border-radius: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+        
+        .muted {
+            color: var(--muted)
+        }
+        
+        
+        @media (max-width: 1100px) {
+            .events-grid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+
+            .cards-row {
+                grid-template-columns: repeat(1, 1fr)
+            }
+
+            .main-container {
+                flex-direction: column;
+                margin-left: 0;
+            }
+            
+            .main-content {
+                width: 100%;
+                padding: 24px 28px;
+            }
+
+            .right-sidebar {
+                width: 100%;
+                min-width: unset;
+                position: static;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hover-trigger"></div>
+    
+    <aside class="left-sidebar" aria-hidden="true">
+        <div class="logo" style="margin-bottom:24px;">
+           <img src="assets/logo.png" alt="Logo" class="w-10 h-10 rounded-full" />
+        </div>
+        <div class="divider"></div>
+         <div class="flex flex-col gap-6">
+          <a href="main.html">
+          <div class="w-6 h-6 text-black cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div></a>
+          <a href="main-2.html">
+          <div class="w-6 h-6 text-black/20 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div></a>
+        </div>
+    </aside>
+
+    <div class="main-container">
+        <main class="main-content">
+            <header style="padding-bottom:8px">
+                <div class="flex" style="align-items:center; gap: 16px;">
+                    <div>
+                        <h1>Hi Harikrishnan</h1>
+                        <div class="sub">Welcome to your dashboard</div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="events mb-8">
+                <h2>Events</h2>
+                <div class="events-grid">
+                    <div class="card green">
+                        <div class="flex-col gap-2">
+                            <div class="flex" style="align-items:center; gap:10px;">
+                                <div class="icon-round">✓</div>
+                                <div style="flex:1">
+                                    <div style="font-size:12px;font-weight:700">UDZN - Vyvidh '24</div>
+                                    <div style="font-size:11px;opacity:.9">UI design hackathon</div>
+                                </div>
+                            </div>
+                            <div class="btn">Applied</div>
+                        </div>
+                    </div>
+                    <div class="card blue">
+                        <div class="flex-col gap-2">
+                            <div class="flex" style="align-items:center; gap:10px;">
+                                <div class="icon-round">★</div>
+                                <div>
+                                    <div style="font-weight:700">Sandshores '24</div>
+                                    <div style="font-size:11px">Website dev hackathon</div>
+                                </div>
+                            </div>
+                            <div class="btn">Apply</div>
+                        </div>
+                    </div>
+                    <div class="card purple">
+                        <div class="flex-col gap-2">
+                            <div class="flex" style="align-items:center; gap:10px;">
+                                <div class="icon-round">✦</div>
+                                <div>
+                                    <div style="font-weight:700">Designathon '24</div>
+                                    <div style="font-size:11px">UX design competition</div>
+                                </div>
+                            </div>
+                            <div class="btn">Apply</div>
+                        </div>
+                    </div>
+                    <div class="card orange">
+                        <div class="flex-col gap-2">
+                            <div class="flex" style="align-items:center; gap:10px;">
+                                <div class="icon-round">⛱</div>
+                                <div>
+                                    <div style="font-weight:700">CodeStorm '24</div>
+                                    <div style="font-size:11px">Beach side hackathon</div>
+                                </div>
+                            </div>
+                            <div class="btn">Apply</div>
+                        </div>
+                    </div>
+                    <div class="card pink">
+                        <div class="flex-col gap-2">
+                            <div class="flex" style="align-items:center; gap:10px;">
+                                <div class="icon-round">📱</div>
+                                <div>
+                                    <div style="font-weight:700">PES HACKS '24</div>
+                                    <div style="font-size:11px">App dev hackathon</div>
+                                </div>
+                            </div>
+                            <div class="btn">Apply</div>
+                        </div>
+                    </div>
+                    <div class="card red">
+                        <div class="flex-col gap-2">
+                            <div class="flex" style="align-items:center; gap:10px;">
+                                <div class="icon-round">🎨</div>
+                                <div>
+                                    <div style="font-weight:700">Designathon</div>
+                                    <div style="font-size:11px">NID designathon 2024</div>
+                                </div>
+                            </div>
+                            <div class="btn">Apply</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+                    <strong style="font-size:14px">View all</strong>
+                    <span style="opacity:.6">→</span>
+                </div>
+            </section>
+
+            <section class="card-large mb-8">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                    <h2 style="margin:0;font-size:20px">Todo list</h2>
+                    <div class="controls">
+                        <div class="search">
+                            <svg width="16" height="16" viewBox="0 0 24 24" style="margin-right:8px;opacity:.7">
+                                <circle cx="11" cy="11" r="6" stroke="#222" stroke-width="1" fill="none"></circle>
+                                <path d="M21 21 L16.7 16.7" stroke="#222" stroke-width="1" stroke-linecap="round"></path>
+                            </svg>
+                            <input type="text" placeholder="Search task" />
+                        </div>
+                    </div>
+                </div>
+                <div class="this-week">
+                    <h3>This week</h3>
+                    <div style="margin-top:10px" class="todo-item">
+                        <div class="todo-left">
+                            <div style="width:10px;height:10px;background:#2C7A4B;border-radius:3px">
+                            </div>
+                            <div style="font-weight:600">Write an essay about Indian economy</div>
+                        </div>
+                        <div class="flex gap-2" style="align-items:center;">
+                            <div style="background:#FFEAF6; color:#FF4DA6; padding:6px 8px; border-radius:999px; font-weight:600; font-size:12px;">Today</div>
+                            <div style="font-size:12px;color:var(--muted)">Economics</div>
+                            <div style="display:flex;align-items:center;gap:6px">
+                                <img src="https://api.builder.io/api/v1/image/assets/TEMP/830a27c0761c4cd7f48c0f5c03145ba6b9a8aa69?width=40"
+                                    alt=""
+                                    style="width:20px;height:20px;border-radius:50%;border:2px solid white" />
+                                <img src="https://api.builder.io/api/v1/image/assets/TEMP/e8c6ed7d9f15ddff8958aacb101329216b4a677e?width=42"
+                                    alt=""
+                                    style="width:20px;height:20px;border-radius:50%;border:2px solid white" />
+                                <div
+                                    style="width:20px;height:20px;background:#2C7A4B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:10px">
+                                    Q</div>
+                            </div>
+                            <div class="flex gap-2" style="align-items:center;color:var(--muted);font-size:12px">
+                                <div>🔁 <strong style="font-size:11px">2</strong></div>
+                                <div>💬 <strong style="font-size:11px">2</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                     <div style="margin-top:10px" class="todo-item">
+                        <div class="todo-left">
+                            <div style="width:10px;height:10px;background:#2C7A4B;border-radius:3px">
+                            </div>
+                            <div style="font-weight:600">Do Network Lab Programs</div>
+                        </div>
+                        <div class="flex gap-2" style="align-items:center;">
+                            <div style="background:#FFEAF6; color:#FF4DA6; padding:6px 8px; border-radius:999px; font-weight:600; font-size:12px;">2 Days Left</div>
+                            <div style="font-size:12px;color:var(--muted)">Network Lab</div>
+                            <div style="display:flex;align-items:center;gap:6px">
+                                <img src="https://api.builder.io/api/v1/image/assets/TEMP/830a27c0761c4cd7f48c0f5c03145ba6b9a8aa69?width=40"
+                                    alt=""
+                                    style="width:20px;height:20px;border-radius:50%;border:2px solid white" />
+                                <img src="https://api.builder.io/api/v1/image/assets/TEMP/e8c6ed7d9f15ddff8958aacb101329216b4a677e?width=42"
+                                    alt=""
+                                    style="width:20px;height:20px;border-radius:50%;border:2px solid white" />
+                                <div
+                                    style="width:20px;height:20px;background:#2C7A4B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:10px">
+                                    Q</div>
+                            </div>
+                            <div class="flex gap-2" style="align-items:center;color:var(--muted);font-size:12px">
+                                <div>🔁 <strong style="font-size:11px">2</strong></div>
+                                <div>💬 <strong style="font-size:11px">2</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                     <div style="margin-top:10px" class="todo-item">
+                        <div class="todo-left">
+                            <div style="width:10px;height:10px;background:#2C7A4B;border-radius:3px">
+                            </div>
+                            <div style="font-weight:600">Design The UI For Mini Project</div>
+                        </div>
+                        <div class="flex gap-2" style="align-items:center;">
+                            <div style="background:#FFEAF6; color:#FF4DA6; padding:6px 8px; border-radius:999px; font-weight:600; font-size:12px;">24/02/2024</div>
+                            <div style="font-size:12px;color:var(--muted)">Mini project</div>
+                            <div style="display:flex;align-items:center;gap:6px">
+                                <img src="https://api.builder.io/api/v1/image/assets/TEMP/830a27c0761c4cd7f48c0f5c03145ba6b9a8aa69?width=40"
+                                    alt=""
+                                    style="width:20px;height:20px;border-radius:50%;border:2px solid white" />
+                                <img src="https://api.builder.io/api/v1/image/assets/TEMP/e8c6ed7d9f15ddff8958aacb101329216b4a677e?width=42"
+                                    alt=""
+                                    style="width:20px;height:20px;border-radius:50%;border:2px solid white" />
+                                <div
+                                    style="width:20px;height:20px;background:#2C7A4B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:10px">
+                                    Q</div>
+                            </div>
+                            <div class="flex gap-2" style="align-items:center;color:var(--muted);font-size:12px">
+                                <div>🔁 <strong style="font-size:11px">2</strong></div>
+                                <div>💬 <strong style="font-size:11px">2</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                     <div style="margin-top:10px" class="todo-item">
+                        <div class="todo-left">
+                            <div style="width:10px;height:10px;background:#2C7A4B;border-radius:3px">
+                            </div>
+                            <div style="font-weight:600">Attend the meeting with clients</div>
+                        </div>
+                        <div class="flex gap-2" style="align-items:center;">
+                            <div style="background:#FFEAF6; color:#FF4DA6; padding:6px 8px; border-radius:999px; font-weight:600; font-size:12px;">4 Days left</div>
+                            <div style="font-size:12px;color:var(--muted)">Freelancing</div>
+                            <div style="display:flex;align-items:center;gap:6px">
+                                <img src="https://api.builder.io/api/v1/image/assets/TEMP/830a27c0761c4cd7f48c0f5c03145ba6b9a8aa69?width=40"
+                                    alt=""
+                                    style="width:20px;height:20px;border-radius:50%;border:2px solid white" />
+                                <img src="https://api.builder.io/api/v1/image/assets/TEMP/e8c6ed7d9f15ddff8958aacb101329216b4a677e?width=42"
+                                    alt=""
+                                    style="width:20px;height:20px;border-radius:50%;border:2px solid white" />
+                                <div
+                                    style="width:20px;height:20px;background:#2C7A4B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:10px">
+                                    Q</div>
+                            </div>
+                            <div class="flex gap-2" style="align-items:center;color:var(--muted);font-size:12px">
+                                <div>🔁 <strong style="font-size:11px">2</strong></div>
+                                <div>💬 <strong style="font-size:11px">2</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="cards-row">
+                <div class="small-card">
+                    <h3 style="margin:0 0 12px 0">Internal Marks</h3>
+                    <div style="display:flex;align-items:center;gap:8px">
+                        <div style="width:10px;height:10px;background:#2C7A4B;border-radius:50%">
+                        </div>
+                        <div style="font-weight:700;color:#2C7A4B">On track</div>
+                    </div>
+                    <div class="bar-graph">
+                        <div class="bar-container">
+                            <div class="bar-score">30</div>
+                            <div class="bar">
+                                <div class="bar-fill" style="height: 75%;background: #7B3AEA;"></div>
+                            </div>
+                            <div class="bar-label">AAD</div>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-score">24</div>
+                            <div class="bar">
+                                <div class="bar-fill" style="height: 60%;background: #7B3AEA;"></div>
+                            </div>
+                            <div class="bar-label">CG</div>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-score">40</div>
+                            <div class="bar">
+                                <div class="bar-fill" style="height: 100%;background: #7B3AEA;"></div>
+                            </div>
+                            <div class="bar-label">EC</div>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-score">28</div>
+                            <div class="bar">
+                                <div class="bar-fill" style="height: 70%;background: #7B3AEA;"></div>
+                            </div>
+                            <div class="bar-label">NL</div>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-score">35</div>
+                            <div class="bar">
+                                <div class="bar-fill" style="height: 87%;background: #7B3AEA;"></div>
+                            </div>
+                            <div class="bar-label">PY</div>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-score">46</div>
+                            <div class="bar">
+                                <div class="bar-fill" style="height: 100%; background: #7B3AEA;"></div>
+                            </div>
+                            <div class="bar-label">CD</div>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-score">13</div>
+                            <div class="bar">
+                                <div class="bar-fill" style="height: 32%; background: #7B3AEA;"></div>
+                            </div>
+                            <div class="bar-label">COM</div>
+                        </div>
+                    </div>
+                </div>
+                  <div class="small-card">
+                    <h3 style="margin:0 0 12px 0">Skill progress</h3>
+                    <div class="flex flex-col gap-2">
+                        <div class="flex" style="align-items:center;gap:12px">
+                            <div style="width:30px">Java</div>
+                            <div class="flex gap-2" style="flex:1;">
+                                <div class="progress-bar" style="flex:1"><i style="width:100%; background:#2266FF;"></i></div>
+                                <div class="progress-bar" style="flex:1"><i style="width:0%; background:#2266FF;"></i></div>
+                            </div>
+                        </div>
+                        <div class="flex" style="align-items:center;gap:12px">
+                            <div style="width:40px">Python</div>
+                            <div class="flex gap-2" style="flex:1;">
+                                <div class="progress-bar" style="flex:1"><i style="width:100%; background:#2266FF;"></i></div>
+                                <div class="progress-bar" style="flex:1"><i style="width:0%; background:#2266FF;"></i></div>
+                            </div>
+                        </div>
+                        <div class="flex" style="align-items:center;gap:12px">
+                            <div style="width:60px">JS</div>
+                            <div class="flex gap-2" style="flex:1;">
+                                <div class="progress-bar" style="flex:1"><i style="width:100%; background:#2266FF;"></i></div>
+                                <div class="progress-bar" style="flex:1"><i style="width:0%; background:#2266FF;"></i></div>
+                            </div>
+                        </div>
+                        <div class="flex" style="align-items:center;gap:12px">
+                            <div style="width:30px">React  </div>
+                            <div class="flex gap-3" style="flex:1;">
+                                <div class="progress-bar" style="flex:1"><i style="width:100%; background:#2266FF;"></i></div>
+                                <div class="progress-bar" style="flex:1"><i style="width:0%; background:#2266FF;"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+                        <strong>View all</strong> <span style="opacity:.6">→</span>
+                    </div>
+                </div>
+                <div class="small-card">
+                    <h3 style="margin:0 0 12px 0">Ongoing projects</h3>
+                    <div class="flex gap-2" style="align-items:center;">
+                        <div
+                            style="width:30px;height:36px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center">
+                            <img src="assets/41.PNG">
+                        </div>
+                        <div>
+                            <div style="font-weight:700">Premagic UI design</div>
+                            <div style="font-size:12px;color:var(--muted)">22 Feb 2024</div>
+                        </div>
+                    </div>
+                     <div class="flex gap-2" style="align-items:center;">
+                        <div
+                            style="width:30px;height:36px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center">
+                            <img src="assets/42.PNG">
+                        </div>
+                        <div>
+                            <div style="font-weight:700">Panda website development</div>
+                            <div style="font-size:12px;color:var(--muted)">22 Feb 2024</div>
+                        </div>
+                    </div>
+                     <div class="flex gap-2" style="align-items:center;">
+                        <div
+                            style="width:30px;height:36px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center">
+                            <img src="assets/43.PNG">
+                        </div>
+                        <div>
+                            <div style="font-weight:700">Salesync UX design</div>
+                            <div style="font-size:12px;color:var(--muted)">22 Feb 2024</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+                        <strong>View all</strong> <span style="opacity:.6">→</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="right-sidebar">
+            <section class="resource mb-8">
+                <h2>Resource hub</h2>
+                <div style="height:12px"></div>
+                <div class="searchbar" style="margin-bottom:12px;position:relative">
+                    <input type="text" value="CST 302" aria-label="search resource" />
+                    <div class="search-icon"><img src="assets/search-icon.png" style="width: 25px;"></div>
+                    <div class="right-actions"><span style="opacity:.8">Cancel</span></div>
+                </div>
+                <div class="resource-item">
+                    <div style="width:36px;height:46px;display:flex;align-items:center;justify-content:center">
+                        <img src="assets/51.PNG" style="width: 23px;">
+                    </div>
+                    <div style="flex:1">
+                        <div
+                            style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                            Compiler Design Module 1.pdf</div>
+                        <div style="font-size:11px;color:var(--muted)">CST 302</div>
+                    </div>
+                    <div style="width: 23px;"><img src="assets/52.PNG" style="width: 23px;"> </div>
+                </div>
+                <div class="resource-item">
+                    <div style="width:36px;height:46px;display:flex;align-items:center;justify-content:center">
+                        <img src="assets/51.PNG" style="width: 23px;">
+                    </div>
+                    <div style="flex:1">
+                        <div
+                            style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                            Compiler Design Module 1.pdf</div>
+                        <div style="font-size:11px;color:var(--muted)">CST 302</div>
+                    </div>
+                    <div style="width: 23px;"><img src="assets/52.PNG" style="width: 23px;"> </div>
+                </div>
+                <div class="resource-item">
+                    <div style="width:36px;height:46px;display:flex;align-items:center;justify-content:center">
+                        <img src="assets/51.PNG" style="width: 23px;">
+                    </div>
+                    <div style="flex:1">
+                        <div
+                            style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                            Compiler Design Module 1.pdf</div>
+                        <div style="font-size:11px;color:var(--muted)">CST 302</div>
+                    </div>
+                    <div style="width: 23px;"><img src="assets/52.PNG" style="width: 23px;"> </div>
+                </div>
+                <div class="resource-item">
+                    <div style="width:36px;height:46px;display:flex;align-items:center;justify-content:center">
+                        <img src="assets/51.PNG" style="width: 23px;">
+                    </div>
+                    <div style="flex:1">
+                        <div
+                            style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                            Compiler Design Module 1.pdf</div>
+                        <div style="font-size:11px;color:var(--muted)">CST 302</div>
+                    </div>
+                    <div style="width: 23px;"><img src="assets/52.PNG" style="width: 23px;"> </div>
+                </div>
+                <div class="resource-item">
+                    <div style="width:36px;height:46px;display:flex;align-items:center;justify-content:center">
+                        <img src="assets/51.PNG" style="width: 23px;">
+                    </div>
+                    <div style="flex:1">
+                        <div
+                            style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                            Compiler Design Module 1.pdf</div>
+                        <div style="font-size:11px;color:var(--muted)">CST 302</div>
+                    </div>
+                    <div style="width: 23px;"><img src="assets/52.PNG" style="width: 23px;"> </div>
+                </div>
+                <div class="resource-item">
+                    <div style="width:36px;height:46px;display:flex;align-items:center;justify-content:center">
+                        <img src="assets/51.PNG" style="width: 23px;">
+                    </div>
+                    <div style="flex:1">
+                        <div
+                            style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                            Compiler Design Module 1.pdf</div>
+                        <div style="font-size:11px;color:var(--muted)">CST 302</div>
+                    </div>
+                    <div style="width: 23px;"><img src="assets/52.PNG" style="width: 23px;"> </div>
+                </div>
+                <div class="resource-item">
+                    <div style="width:36px;height:46px;display:flex;align-items:center;justify-content:center">
+                        <img src="assets/51.PNG" style="width: 23px;">
+                    </div>
+                    <div style="flex:1">
+                        <div
+                            style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                            Compiler Design Module 1.pdf</div>
+                        <div style="font-size:11px;color:var(--muted)">CST 302</div>
+                    </div>
+                    <div style="width: 23px;"><img src="assets/52.PNG" style="width: 23px;"> </div>
+                </div>
+                <div class="resource-item">
+                    <div style="width:36px;height:46px;display:flex;align-items:center;justify-content:center">
+                        <img src="assets/51.PNG" style="width: 23px;">
+                    </div>
+                    <div style="flex:1">
+                        <div
+                            style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                            Compiler Design Module 1.pdf</div>
+                        <div style="font-size:11px;color:var(--muted)">CST 302</div>
+                    </div>
+                    <div style="width: 23px;"><img src="assets/52.PNG" style="width: 23px;"> </div>
+                </div>
+                <div class="resource-item">
+                    <div style="width:36px;height:46px;display:flex;align-items:center;justify-content:center">
+                        <img src="assets/51.PNG" style="width: 23px;">
+                    </div>
+                    <div style="flex:1">
+                        <div
+                            style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                            Compiler Design Module 1.pdf</div>
+                        <div style="font-size:11px;color:var(--muted)">CST 302</div>
+                    </div>
+                    <div style="width: 23px;"><img src="assets/52.PNG" style="width: 23px;"> </div>
+                </div>
+                <div class="resource-item">
+                    <div style="width:36px;height:46px;display:flex;align-items:center;justify-content:center">
+                        <img src="assets/51.PNG" style="width: 23px;">
+                    </div>
+                    <div style="flex:1">
+                        <div
+                            style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                            Compiler Design Module 1.pdf</div>
+                        <div style="font-size:11px;color:var(--muted)">CST 302</div>
+                    </div>
+                    <div style="width: 23px;"><img src="assets/52.PNG" style="width: 23px;"> </div>
+                </div>
+                <div class="resource-item">
+                    <div style="width:36px;height:46px;display:flex;align-items:center;justify-content:center">
+                        <img src="assets/51.PNG" style="width: 23px;">
+                    </div>
+                    <div style="flex:1">
+                        <div
+                            style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                            Compiler Design Module 1.pdf</div>
+                        <div style="font-size:11px;color:var(--muted)">CST 302</div>
+                    </div>
+                    <div style="width: 23px;"><img src="assets/52.PNG" style="width: 23px;"> </div>
+                </div>
+                <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+                    <strong>View all</strong> <span style="opacity:.6">→</span>
+                </div>
+            </section>
+            <section class="card-large">
+                <h3 style="margin:0 0 12px 0">Class group, educational links</h3>
+                <div class="flex gap-2" style="align-items:center">
+                    <a href="https://www.whatsapp.com/">
+                        <div style="opacity:.7"><img src="assets/1.PNG" style="width: 30px;"></div>
+                    </a>
+                    <a href="https://telegram.org/">
+                        <div style="opacity:.7"><img src="assets/2.PNG" style="width: 30px;"></div>
+                    </a>
+                    <a href="https://drive.google.com/">
+                        <div style="opacity:.7"><img src="assets/3.PNG" style="width: 30px;"></div>
+                    </a>
+                    <a href="https://www.youtube.com/">
+                        <div style="opacity:.7"><img src="assets/4.PNG" style="width: 30px;"></div>
+                    </a>
+                    <a href="https://www.instagram.com/">
+                        <div style="opacity:.7"><img src="assets/5.PNG" style="width: 30px;"></div>
+                    </a>
+                    <a href="https://www.messenger.com/">
+                        <div style="opacity:.7"><img src="assets/6.PNG" style="width: 30px;"></div>
+                    </a>
+                </div>
+            </section>
+        </aside>
+
+    </div>
+</body>
+
+</html>
